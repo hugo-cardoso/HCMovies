@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
 	<link rel="stylesheet" type="text/css" href="css/animate.min.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
@@ -16,6 +16,10 @@
 
 		<div style="width: 50px; height: 50px; float: left; display: flex;" ng-click="toggleMenu()">
 			<i style="margin: auto;" class="mdi mdi-menu mdi-24px"></i>
+		</div>
+
+		<div style="height: 50px; float: right; display: flex; padding-right: 25px;">
+			<span style="margin: auto; font-weight: 500;">HCMovies</span>
 		</div>
 
 	</div>
@@ -70,7 +74,7 @@
 				<div style="width: 80%; margin: auto; position: relative;">
 
 					<div class="bdg">
-						<span>{{filme.nota}}</span>
+						<span>{{filme.nota | number:1}}</span>
 					</div>
 
 					<img ng-src="res/{{filme.capa}}.jpg">
