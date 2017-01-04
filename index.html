@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
+	<link rel="stylesheet" type="text/css" href="css/animate.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<title>HCMovies</title>
+</head>
+<body ng-controller="appController">
+	
+	<div class="nav-bar">
+
+		<div style="width: 50px; height: 50px; float: left; display: flex;" ng-click="toggleMenu()">
+			<i style="margin: auto;" class="mdi mdi-menu mdi-24px"></i>
+		</div>
+
+	</div>
+
+	<div class="conteudo">
+
+		<div class="sidebar-shadow" ng-style="menu" ng-click="menu=''"></div>
+
+		<div class="sidebar" ng-style="menu">
+
+			<div class="header">
+
+				<div>
+					<img style="width: 60px; height: 60px; border-radius: 30px; margin-right: 20px;" src="https://lh3.googleusercontent.com/-Qj0GC5ZpXo4/AAAAAAAAAAI/AAAAAAAAAAA/AKB_U8ugDNuxR28xcPn8XjFfsSPOHG8YCA/s96-c-mo/photo.jpg">
+					<div class="bdg">
+						<span>24</span>
+					</div>
+					<span style="color: #FFF;">Hi, Hugo!</span>
+				</div>
+
+			</div>
+
+			<nav>
+				<ul>
+					<li class="active">
+						<a>My Collection <span class="bdg">{{count.length}}</span></a>
+					</li>
+					<li >
+						<a>Trending Movies</a>
+					</li>
+					<li>
+						<a>History</a>
+					</li>
+					<li>
+						<a>New Movies <span class="bdg">32</span></a>
+					</li>
+					<li>
+						<a>Subscription <span class="bdg">86</span></a>
+					</li>
+					<li>
+						<a>Watch Later</a>
+					</li>
+				</ul>
+			</nav>
+
+		</div>
+
+		<div class="view">
+
+			<div ng-repeat="filme in filmes | filter:query as count" class="col-md-3 col-xs-6 col-lg-3 item">
+
+				<div style="width: 80%; margin: auto; position: relative;">
+
+					<div class="bdg">
+						<span>{{filme.nota}}</span>
+					</div>
+
+					<img ng-src="res/{{filme.capa}}.jpg">
+
+					<div class="description">
+						<h2>{{filme.titulo}}</h2>
+						<h4>{{filme.subtitulo}}</h4>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular.js"></script>
+<script src="js/app.js"></script>
+</html>
