@@ -19,7 +19,7 @@
 		</div>
 
 		<div style="height: 50px; float: right; display: flex; padding-right: 25px;">
-			<span style="margin: auto; font-weight: 500;">HCMovies</span>
+			<span style="margin: auto; font-weight: 500;"><span style="color: #FFEB3B">HC</span>Movies</span>
 		</div>
 
 	</div>
@@ -69,6 +69,11 @@
 
 		<div class="view">
 
+			<div class="header">
+				<h1 style="font-weight: 500;"><span style="color: #FFEB3B;">HC</span>Movies</h1>
+			</div>
+
+
 			<div ng-repeat="filme in filmes | filter:query as count" class="col-md-3 col-xs-6 col-lg-3 item">
 
 				<div style="width: 80%; margin: auto; position: relative;">
@@ -77,7 +82,7 @@
 						<span>{{filme.nota | number:1}}</span>
 					</div>
 
-					<img ng-src="res/{{filme.capa}}.jpg">
+					<img ng-src="res/place_holder.jpg">
 
 					<div class="description">
 						<h2>{{filme.titulo}}</h2>
@@ -92,7 +97,7 @@
 
 	</div>
 
-</body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular.js"></script>
+</body>
 <script src="js/app.js"></script>
 </html>

@@ -27,6 +27,6 @@ app.controller('appController', function($scope) {
 		"nota"	   : 8,
 		"capa"     : "Star-Wars-Episode-II-Attack-Of-The-Clones"
 	}
-	]
+	];
 
 });
