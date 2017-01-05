@@ -128,7 +128,7 @@ h1,h2,h3,h4{
 	.conteudo > .view{
 		padding-left: 0px;
 		padding-right: 0px;
-		padding-top: 75px;
+		padding-top: 50px;
 	}
 
 	.sidebar{
@@ -155,6 +155,10 @@ h1,h2,h3,h4{
 
 	.view > .header {
 		display: none;
+	}
+
+	input.search{
+		border-radius: 0px !important;
 	}
 
 }
@@ -220,8 +224,8 @@ h1,h2,h3,h4{
 
 input.search{
 	background-color: rgba(0,0,0,0.5);
-    border: 1px solid #3c3c3c;
-    padding: 10px;
-    border-radius: 5px;
-    color: #FFF;
+	border: 1px solid #3c3c3c;
+	padding: 10px;
+	border-radius: 5px;
+	color: #FFF;
 }
