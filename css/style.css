@@ -27,6 +27,7 @@ h1,h2,h3,h4{
 	font-size: 13px;
 	-webkit-transition: left 1s;
 	z-index: 999999;
+	background-color: rgba(0,0,0, 0.7);
 }
 
 .sidebar-shadow{
@@ -40,18 +41,12 @@ h1,h2,h3,h4{
 	z-index: 9998;
 }
 
-.sidebar > .header {
-	width: 100%;
-	height: 150px;
-	display: flex;
-} 
-
-.sidebar > .header > div {
+.sidebar > .header > div.hi > div {
 	margin: auto;
 	position: relative;
 }
 
-.sidebar > .header > div > .bdg {
+.sidebar > .header > div.hi  .bdg {
 	width: 25px;
 	height: 25px; 
 	background-color: #F44336;
@@ -63,7 +58,7 @@ h1,h2,h3,h4{
 	display: flex;
 }
 
-.sidebar > .header > div > .bdg > span {
+.sidebar > .header > div.hi  .bdg > span {
 	margin: auto;
 	color: #FFF;
 }
@@ -112,6 +107,8 @@ h1,h2,h3,h4{
 	padding-left: 275px;
 	padding-right: 25px;
 	padding-top: 25px;
+	overflow: auto;
+	overflow-x: hidden; 
 
 }
 
@@ -138,6 +135,10 @@ h1,h2,h3,h4{
 		left: -250px;
 		-webkit-transition: left 1s;
 		background-color: black;
+	}
+
+	.sidebar .header > .logo{
+		display: none !important;
 	}
 
 	.nav-bar{
@@ -182,6 +183,7 @@ h1,h2,h3,h4{
 .view > .item  .description{
 	text-align: left;
 	margin-top: 10px;
+	margin-bottom: 30px;
 }
 
 .view > .item .description > h2{
@@ -213,37 +215,13 @@ h1,h2,h3,h4{
 	width: 100%; 
 	padding: 50px 25px; 
 	padding-top: 25px;
+	margin-bottom: 25px;
 }
 
-.ng-enter {
-  -webkit-transition: 1s;
-  transition: 1s;
-  
-  margin-left: 100%;
-}
-
-.ng-enter-active {
-  margin-left: 0;
-}
-
-.ng-leave {
-  -webkit-transition: 1s;
-  transition: 1s;
-  
-  margin-left: 0;
-}
-
-.ng-leave-active {
-  margin-left: 100%;
-}
-
-.ng-move {
-  -webkit-transition: 1s;
-  transition: 1s;
-  
-  background: gold;
-}
-
-.ng-move-active {
-  background: #fff;
+input.search{
+	background-color: rgba(0,0,0,0.5);
+    border: 1px solid #3c3c3c;
+    padding: 10px;
+    border-radius: 5px;
+    color: #FFF;
 }
