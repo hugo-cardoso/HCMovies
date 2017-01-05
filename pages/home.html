@@ -15,7 +15,7 @@
 </div>
 
 
-<div ng-repeat="filme in filmes | filter: search | filter:query as count" class="col-md-3 col-xs-6 col-lg-3 item">
+<div ng-repeat="filme in filmes | orderBy: '-nota' | filter: search | filter:query as count" class="col-md-3 col-xs-6 col-lg-3 item">
 
 	<div style="width: 80%; margin: auto; position: relative;">
 
