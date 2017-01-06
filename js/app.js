@@ -1,18 +1,39 @@
-var app = angular.module('app', ['ngRoute']);
+var app = angular.module('app', ['ngRoute','firebase','angularMoment','naif.base64']);
+
 
 app.config(function($routeProvider) {
 
 	$routeProvider
 
-            //Home
-            .when('/', {
-            	templateUrl : 'pages/home.html',
-            	controller  : 'homeController'
-            })
+	.when('/', {
+		templateUrl : 'pages/home.html',
+		controller  : 'homeController'
+	})
 
-        });
+	.when('/home', {
+		templateUrl : 'pages/home.html',
+		controller  : 'homeController'
+	})
 
-app.controller('appController', function($scope, $rootScope) {
+	.when('/postar', {
+		templateUrl : 'pages/postar.html',
+		controller  : 'postarController'
+	})
+
+	.when('/filme', {
+		templateUrl : 'pages/filme.html',
+		controller  : 'filmeController'
+	})
+
+
+});
+
+
+app.controller('appController', function($scope, $rootScope, $firebaseArray, $firebaseAuth) {
+
+	var ref = firebase.database().ref("/filmes");
+
+	$rootScope.filmes = $firebaseArray(ref);
 
 	$scope.toggleMenu = function(){
 
@@ -24,51 +45,94 @@ app.controller('appController', function($scope, $rootScope) {
 
 	}
 
-	$rootScope.filmes = 
-	[
-	{
-		"titulo"   : "Star Wars: Episode I",
-		"subtitulo": "1999",
-		"nota"	   : 6.5,
-		"capa"     : "Star-Wars-Episode-I-The-Phantom-Menace"
-	},{
-		"titulo"   : "Star Wars: Episode II",
-		"subtitulo": "2002",
-		"nota"	   : 6.7,
-		"capa"     : "Star-Wars-Episode-II-Attack-Of-The-Clones"
-	},{
-		"titulo"   : "Star Wars: Episode III",
-		"subtitulo": "2005",
-		"nota"	   : 7.6,
-		"capa"     : "Star-Wars-Episode-III-Revenge-Of-The-Sith"
-	},{
-		"titulo"   : "Star Wars: Episode IV",
-		"subtitulo": "1997",
-		"nota"	   : 8.7,
-		"capa"     : "Star-Wars-Episode-IV-A-New-Hope"
-	},{
-		"titulo"   : "Star Wars: Episode V",
-		"subtitulo": "1980",
-		"nota"	   : 8.8,
-		"capa"     : "Star-Wars-Episode-V-The-Empire-Strikes-Back"
-	},{
-		"titulo"   : "Star Wars: Episode VI",
-		"subtitulo": "1983",
-		"nota"	   : 8.4,
-		"capa"     : "Star-Wars-Episode-VI-Return-Of-The-Jedi"
-	},{
-		"titulo"   : "Star Wars: Episode VII",
-		"subtitulo": "2005",
-		"nota"	   : 8.1,
-		"capa"     : "Star-Wars-Episode-VII-The-Force-Awakens"
+	$scope.authObj = $firebaseAuth();
+
+	$scope.logar = function(){
+
+		$scope.authObj.$signInWithPopup("google").then(function(result) {
+			$rootScope.user = result.user;
+		}).catch(function(error) {
+			console.error("Authentication failed:", error);
+		});
+
 	}
-	];
 
 });
 
-app.controller('homeController', function($scope, $rootScope) {
+app.controller('homeController', function($scope, $rootScope, $location) {
+
+	$scope.abrir = function(x){
+
+		$rootScope.id = x;
+		$location.url('filme');
+
+	}
+
+});
+
+app.controller('postarController', function($scope, $rootScope) {
+
+	$scope.enviar = function(){
 
 
+		var data = String(moment().format('YYYY-MM-DD'));
+		var hora = String(moment().format('HH:mm'));
+		var titulo = $scope.titulo;
+		var ano  = $scope.ano;
+		var nota  = $scope.nota;
+		var capa  = $scope.capa.base64;
 
+		$scope.filmes.$add({"titulo": titulo, "ano": ano, "nota": nota, "capa": capa, "data": data, "hora": hora}).then(function() {
+			$scope.titulo = "";
+			$scope.ano = "";
+			$scope.nota = "";
+			$scope.capa = "";
+		}).catch(function(error) {
+			console.error("Error: ", error);
+		});
+
+	}
+
+});
+
+app.controller('filmeController', function($scope, $rootScope, $firebaseArray) {
+
+	var id = $rootScope.id;
+
+	var ref = firebase.database().ref("/filmes/" + id);
+
+	ref.once("value").then(function(snapshot) {
+		$scope.titulo = snapshot.child("titulo").val(); 
+		$scope.ano = snapshot.child("ano").val(); 
+		$scope.capa = snapshot.child("capa").val(); 
+	});
+
+	$scope.notas = $firebaseArray(firebase.database().ref("/filmes/" + id + "/ratings"));
+
+	$scope.notas.$loaded().then(function() {
+
+		$scope.nota = 0;
+
+		for (var i = 0; i < $scope.notas.length; i++) {
+
+			$scope.nota = Number($scope.nota) + Number($scope.notas[i].nota);
+			$scope.media = $scope.nota / $scope.notas.length;
+
+			firebase.database().ref("/filmes/" + id).update({nota: $scope.media});
+
+		}
+
+	});
+
+	$scope.avaliar = function(){
+
+		$scope.notas.$add({"nota": $scope.rating.nota}).then(function() {
+			
+
+		}).catch(function(error) {
+			console.error("Error: ", error);
+		});
+
+	}
 
 });

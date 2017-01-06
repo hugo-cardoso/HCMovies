@@ -1,0 +1,52 @@
+
+<div class="row header" style="margin-bottom: 25px;">
+	
+	<div class="col-md-6 col-xs-12" style="line-height: 50px;">
+
+		<a href="#/">Filmes</a> > {{titulo}}
+		
+	</div>
+
+</div>
+
+<div class="col-md-12" style="text-align: center;">
+	
+	<img style="height: 300px; margin-bottom: 25px;" src="data:image/png;base64,{{capa}}">
+	<h1>{{titulo}}</h1>
+	<h1>{{ano}}</h1>
+	{{media}}
+	<hr>
+	<div>
+
+		<h3 style="margin-bottom: 20px;">Avalie este filme</h3>
+
+		<form name="myForm">
+
+			<div style="margin-bottom: 20px;">
+				<label class="radio-inline">
+					<input type="radio" ng-model="rating.nota" value="2.5">
+					Ruim
+				</label>
+				<label class="radio-inline">
+					<input type="radio" ng-model="rating.nota" value="5">
+					Regular
+				</label>
+				<label class="radio-inline">
+					<input type="radio" ng-model="rating.nota" value="7.5">
+					Bom
+				</label>
+				<label class="radio-inline">
+					<input type="radio" ng-model="rating.nota" value="10">
+					Ótimo
+				</label>
+			</div>
+
+			<button class="button button-primary" ng-click="avaliar()">ENVIAR</button>
+
+		</form>
+
+	</div>
+
+</div>
+
+

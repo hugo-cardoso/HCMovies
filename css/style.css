@@ -2,6 +2,7 @@ body, html{
 	height: 100%;
 	font-family: 'Roboto', sans-serif !important;
 	color: #FFF;
+	font-weight: 400;
 }
 
 body > .conteudo{
@@ -15,6 +16,11 @@ body > .conteudo{
 
 h1,h2,h3,h4{
 	margin: 0px;
+}
+
+a, a:hover{
+	color: #FFF;
+	text-decoration: none;
 }
 
 .sidebar {
@@ -154,7 +160,7 @@ h1,h2,h3,h4{
 	}
 
 	.view > .header {
-		display: none;
+		padding: 0px 25px;
 	}
 
 	input.search{
@@ -173,6 +179,7 @@ h1,h2,h3,h4{
 
 .view > .item{
 	text-align: center;
+	cursor: pointer;
 }
 
 .view > .item .bdg{
@@ -225,9 +232,6 @@ h1,h2,h3,h4{
 
 .view > .header{
 	width: 100%; 
-	padding: 50px 25px; 
-	padding-top: 25px;
-	margin-bottom: 25px;
 }
 
 input.search{
@@ -236,4 +240,39 @@ input.search{
 	padding: 10px;
 	border-radius: 5px;
 	color: #FFF;
+}
+
+label{
+	font-weight: 400;
+}
+
+form label.label{
+	display: inline-block;
+	width: 100%;
+	margin-bottom: 5px;
+}
+
+input[type="text"],input[type="number"],input[type="file"],select{
+	background-color: rgba(0,0,0,0.5);
+	border: 1px solid #3c3c3c;
+	padding: 10px;
+	width: 100%;
+	margin-bottom: 5px;
+}
+
+.button {
+	padding: 10px 15px;
+	border: none;
+	text-transform: uppercase;
+	margin: 5px 0px;
+}
+
+.button.button-default{
+	color: black;
+	background-color: #FFF;
+}
+
+.button.button-primary{
+	color: black;
+	background-color: #FFEB3B;
 }

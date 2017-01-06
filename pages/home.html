@@ -2,7 +2,7 @@
 	
 	<div class="col-md-6 hidden-xs" style="line-height: 50px;">
 
-		My Collection ({{filmes.length}})
+		Filmes ({{filmes.length}})
 		
 	</div>
 
@@ -15,7 +15,7 @@
 </div>
 
 
-<div ng-repeat="filme in filmes | orderBy: '-nota' | filter: search | filter:query as count" class="col-md-3 col-xs-6 col-lg-3 item">
+<div ng-repeat="(key, filme) in filmes | orderBy: '-nota' | filter: search | filter:query as count" class="col-md-3 col-xs-6 col-lg-3 item" ng-click="abrir(filme.$id)">
 
 	<div style="width: 80%; margin: auto; position: relative;">
 
@@ -23,11 +23,11 @@
 			<span>{{filme.nota | number:1}}</span>
 		</div>
 
-		<img ng-src="res/{{filme.capa}}.jpg">
+		<img ng-src="data:image/png;base64,{{filme.capa}}">
 
 		<div class="description">
 			<h2>{{filme.titulo}}</h2>
-			<h4>{{filme.subtitulo}}</h4>
+			<h4>{{filme.ano}}</h4>
 		</div>
 
 	</div>
