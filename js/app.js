@@ -50,8 +50,10 @@ app.controller('appController', function($scope, $rootScope, $firebaseArray, $fi
 	$scope.logar = function(){
 
 		$scope.authObj.$signInWithPopup("google").then(function(result) {
-			$rootScope.user = result.user;
-			console.log($rootScope.user);
+			$scope.$apply(function () {
+				$rootScope.user = result.user;
+				console.log($rootScope.user);
+			})
 		}).catch(function(error) {
 			console.error("Authentication failed:", error);
 		});
