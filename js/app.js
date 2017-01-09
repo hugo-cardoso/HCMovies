@@ -29,7 +29,13 @@ app.config(function($routeProvider) {
 });
 
 
-app.controller('appController', function($scope, $rootScope, $firebaseArray, $firebaseAuth) {
+app.controller('appController', function($scope, $rootScope, $firebaseArray, $firebaseAuth, $http) {
+
+	$http.get("http://api.myapifilms.com/imdb/idIMDB?title=matrix&token=8e3c9c9b-7252-4d3a-839e-7a4b02f94791")
+    .then(function(response) {
+        $scope.myWelcome = response;
+        console.log($scope.myWelcome);
+    });
 
 	var ref = firebase.database().ref("/filmes");
 
