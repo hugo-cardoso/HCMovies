@@ -8,10 +8,7 @@ body, html{
 body > .conteudo{
 	height: 100%;
 	width: 100%;
-	background: rgb(45,55,64);
-	background: -moz-linear-gradient(left,  rgba(45,55,64,1) 0%, rgba(45,55,64,1) 50%, rgba(68,85,96,1) 100%);
-	background: -webkit-linear-gradient(left,  rgba(45,55,64,1) 0%,rgba(45,55,64,1) 50%,rgba(68,85,96,1) 100%);
-	background: linear-gradient(to right,  rgba(45,55,64,1) 0%,rgba(45,55,64,1) 50%,rgba(68,85,96,1) 100%);
+	background-color: #212121;
 }
 
 h1,h2,h3,h4{
@@ -182,7 +179,7 @@ a, a:hover{
 	cursor: pointer;
 }
 
-.view > .item .bdg{
+.bdgNota {
 	position: absolute; 
 	right: -25px; 
 	top: 50px; 
@@ -193,7 +190,7 @@ a, a:hover{
 	display: flex; 
 }
 
-.view > .item .bdg > span{
+.bdgNota > span{
 	margin: auto;
 	color: black;
 	font-weight: bold;
