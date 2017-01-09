@@ -11,10 +11,15 @@
 
 <div class="col-md-12" style="text-align: center;">
 	
-	<img style="height: 300px; margin-bottom: 25px;" src="data:image/png;base64,{{capa}}">
+	<div style="position: relative; width: 300px; margin: auto;">
+		<img style="width: 300px; margin-bottom: 25px;" src="data:image/png;base64,{{capa}}">
+		<div class="bdgNota">
+			<span>{{nota / qtNota | number: 1}}</span>
+		</div>
+	</div>
 	<h1>{{titulo}}</h1>
 	<h1>{{ano}}</h1>
-	{{media}}
+	({{qtNota}} avaliações)
 	<hr>
 	<div>
 

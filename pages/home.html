@@ -19,8 +19,8 @@
 
 	<div style="width: 80%; margin: auto; position: relative;">
 
-		<div class="bdg">
-			<span>{{filme.nota | number:1}}</span>
+		<div class="bdgNota" ng-show="filme.nota > 0">
+			<span>{{filme.nota / filme.qtNota | number: 1}}</span>
 		</div>
 
 		<img ng-src="data:image/png;base64,{{filme.capa}}">

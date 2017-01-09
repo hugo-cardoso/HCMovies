@@ -51,6 +51,7 @@ app.controller('appController', function($scope, $rootScope, $firebaseArray, $fi
 
 		$scope.authObj.$signInWithPopup("google").then(function(result) {
 			$rootScope.user = result.user;
+			console.log($rootScope.user);
 		}).catch(function(error) {
 			console.error("Authentication failed:", error);
 		});
@@ -70,64 +71,71 @@ app.controller('homeController', function($scope, $rootScope, $location) {
 
 });
 
-app.controller('postarController', function($scope, $rootScope) {
+app.controller('postarController', function($scope, $rootScope, $location) {
 
-	$scope.enviar = function(){
+	if($rootScope.user){
 
+		if($rootScope.user.uid != "iau7O1FMSfP9EObrWnGQDd5QZjs1"){
 
-		var data = String(moment().format('YYYY-MM-DD'));
-		var hora = String(moment().format('HH:mm'));
-		var titulo = $scope.titulo;
-		var ano  = $scope.ano;
-		var nota  = $scope.nota;
-		var capa  = $scope.capa.base64;
+			$location.url('home');
 
-		$scope.filmes.$add({"titulo": titulo, "ano": ano, "nota": nota, "capa": capa, "data": data, "hora": hora}).then(function() {
-			$scope.titulo = "";
-			$scope.ano = "";
-			$scope.nota = "";
-			$scope.capa = "";
-		}).catch(function(error) {
-			console.error("Error: ", error);
-		});
+		}else{
 
-	}
+			$scope.enviar = function(){
+
+				var data = String(moment().format('YYYY-MM-DD'));
+				var hora = String(moment().format('HH:mm'));
+				var titulo = $scope.titulo;
+				var ano  = $scope.ano;
+				var nota  = $scope.nota;
+				var capa  = $scope.capa.base64;
+
+				$scope.filmes.$add({"titulo": titulo, "ano": ano, "nota": 0, "qtNota": 0, "capa": capa, "data": data, "hora": hora}).then(function() {
+					$scope.titulo = "";
+					$scope.ano = "";
+					$scope.capa = "";
+				}).catch(function(error) {
+					console.error("Error: ", error);
+				});
+
+			}
+
+		}		
+
+	}else{
+
+		$location.url('home');
+	}	
 
 });
 
-app.controller('filmeController', function($scope, $rootScope, $firebaseArray) {
+app.controller('filmeController', function($scope, $rootScope, $firebaseArray, $filter) {
 
 	var id = $rootScope.id;
 
 	var ref = firebase.database().ref("/filmes/" + id);
 
-	ref.once("value").then(function(snapshot) {
-		$scope.titulo = snapshot.child("titulo").val(); 
-		$scope.ano = snapshot.child("ano").val(); 
-		$scope.capa = snapshot.child("capa").val(); 
-	});
+	$scope.update = function(){
+		ref.once("value").then(function(snapshot) {
+			$scope.$apply(function () {
+				$scope.titulo = snapshot.child("titulo").val(); 
+				$scope.ano = snapshot.child("ano").val(); 
+				$scope.capa = snapshot.child("capa").val();
+				$scope.qtNota = snapshot.child("qtNota").val();
+				$scope.nota = snapshot.child("nota").val();
+			});
+		});
+	}
 
-	$scope.notas = $firebaseArray(firebase.database().ref("/filmes/" + id + "/ratings"));
-
-	$scope.notas.$loaded().then(function() {
-
-		$scope.nota = 0;
-
-		for (var i = 0; i < $scope.notas.length; i++) {
-
-			$scope.nota = Number($scope.nota) + Number($scope.notas[i].nota);
-			$scope.media = $scope.nota / $scope.notas.length;
-
-			firebase.database().ref("/filmes/" + id).update({nota: $scope.media});
-
-		}
-
-	});
+	$scope.update();
 
 	$scope.avaliar = function(){
 
-		$scope.notas.$add({"nota": $scope.rating.nota}).then(function() {
+		var novaNota = Number($scope.nota) + Number($scope.rating.nota);
+
+		firebase.database().ref("/filmes/" + id).update({"nota": novaNota, "qtNota": $scope.qtNota + 1}).then(function() {
 			
+			$scope.update();
 
 		}).catch(function(error) {
 			console.error("Error: ", error);
