@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngRoute','firebase','angularMoment','naif.base64']);
+var app = angular.module('app', ['ngRoute','angularMoment','naif.base64']);
 
 
 app.config(function($routeProvider) {
@@ -6,149 +6,99 @@ app.config(function($routeProvider) {
 	$routeProvider
 
 	.when('/', {
-		templateUrl : 'pages/home.html',
-		controller  : 'homeController'
+		templateUrl : 'pages/busca.html',
+		controller  : 'buscaController'
 	})
 
-	.when('/home', {
-		templateUrl : 'pages/home.html',
-		controller  : 'homeController'
+	.when('/buscar', {
+		templateUrl : 'pages/busca.html',
+		controller  : 'buscaController'
 	})
 
-	.when('/postar', {
-		templateUrl : 'pages/postar.html',
-		controller  : 'postarController'
+	.when('/resultado', {
+		templateUrl : 'pages/resultado.html',
+		controller  : 'resultadoController'
 	})
 
-	.when('/filme', {
-		templateUrl : 'pages/filme.html',
-		controller  : 'filmeController'
+	.when('/movie', {
+		templateUrl : 'pages/movie.html',
+		controller  : 'movieController'
 	})
-
 
 });
 
 
-app.controller('appController', function($scope, $rootScope, $firebaseArray, $firebaseAuth, $http) {
+app.controller('appController', function($scope, $rootScope, $http, $location) {
 
-	$http.get("http://api.myapifilms.com/imdb/idIMDB?title=matrix&token=8e3c9c9b-7252-4d3a-839e-7a4b02f94791")
-    .then(function(response) {
-        $scope.myWelcome = response;
-        console.log($scope.myWelcome);
-    });
 
-	var ref = firebase.database().ref("/filmes");
 
-	$rootScope.filmes = $firebaseArray(ref);
 
-	$scope.toggleMenu = function(){
+});
 
-		if($scope.menu){
-			$scope.menu = '';
-		}else{
-			$scope.menu = {'left': 0};	
+app.controller('resultadoController', function($scope, $rootScope, $http, $location) {
+
+	if(!$rootScope.palavra){
+		$location.url('/buscar');
+	}else{
+
+		$scope.page = 1;
+
+		$scope.update = function(){
+
+			$http.get("http://www.omdbapi.com/?s=" + $rootScope.palavra + "&plot=full&type=movie&page=" + $scope.page)
+			.then(function(response) {
+				$scope.resultado = response.data;
+				console.log(response);
+			});
+
+		}
+
+		$scope.update();
+
+		$scope.abrir = function(x){
+
+			$rootScope.imdbID = x;
+
+			$location.url('/movie');
+
+		}
+
+		$scope.back = function(){
+
+			$location.url('buscar');
+
 		}
 
 	}
 
-	$scope.authObj = $firebaseAuth();
+});
 
-	$scope.logar = function(){
+app.controller('buscaController', function($scope, $rootScope, $location, $http) {
 
-		$scope.authObj.$signInWithPopup("google").then(function(result) {
-			$scope.$apply(function () {
-				$rootScope.user = result.user;
-				console.log($rootScope.user);
-			})
-		}).catch(function(error) {
-			console.error("Authentication failed:", error);
-		});
+	$scope.buscar = function(x){
+
+		$rootScope.palavra = x.replace(/ /g,"+");
+
+		$location.url('/resultado');
 
 	}
 
 });
 
-app.controller('homeController', function($scope, $rootScope, $location) {
+app.controller('movieController', function($scope, $rootScope, $location, $http) {
 
-	$scope.abrir = function(x){
+	$http.get("http://www.omdbapi.com/?i=" + $rootScope.imdbID + "&plot=full")
+	.then(function(response) {
+		$scope.filme = response.data;
+		console.log(response.data);
+	});
 
-		$rootScope.id = x;
-		$location.url('filme');
+	$scope.back = function(x){
 
-	}
-
-});
-
-app.controller('postarController', function($scope, $rootScope, $location) {
-
-	if($rootScope.user){
-
-		if($rootScope.user.uid != "iau7O1FMSfP9EObrWnGQDd5QZjs1"){
-
-			$location.url('home');
-
-		}else{
-
-			$scope.enviar = function(){
-
-				var data = String(moment().format('YYYY-MM-DD'));
-				var hora = String(moment().format('HH:mm'));
-				var titulo = $scope.titulo;
-				var ano  = $scope.ano;
-				var nota  = $scope.nota;
-				var capa  = $scope.capa.base64;
-
-				$scope.filmes.$add({"titulo": titulo, "ano": ano, "nota": 0, "qtNota": 0, "capa": capa, "data": data, "hora": hora}).then(function() {
-					$scope.titulo = "";
-					$scope.ano = "";
-					$scope.capa = "";
-				}).catch(function(error) {
-					console.error("Error: ", error);
-				});
-
-			}
-
-		}		
-
-	}else{
-
-		$location.url('home');
-	}	
-
-});
-
-app.controller('filmeController', function($scope, $rootScope, $firebaseArray, $filter) {
-
-	var id = $rootScope.id;
-
-	var ref = firebase.database().ref("/filmes/" + id);
-
-	$scope.update = function(){
-		ref.once("value").then(function(snapshot) {
-			$scope.$apply(function () {
-				$scope.titulo = snapshot.child("titulo").val(); 
-				$scope.ano = snapshot.child("ano").val(); 
-				$scope.capa = snapshot.child("capa").val();
-				$scope.qtNota = snapshot.child("qtNota").val();
-				$scope.nota = snapshot.child("nota").val();
-			});
-		});
-	}
-
-	$scope.update();
-
-	$scope.avaliar = function(){
-
-		var novaNota = Number($scope.nota) + Number($scope.rating.nota);
-
-		firebase.database().ref("/filmes/" + id).update({"nota": novaNota, "qtNota": $scope.qtNota + 1}).then(function() {
-			
-			$scope.update();
-
-		}).catch(function(error) {
-			console.error("Error: ", error);
-		});
+		$location.url('/resultado');
 
 	}
 
+
 });
+
