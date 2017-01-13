@@ -1,21 +1,31 @@
 <div id="search" style="height: 100%; width: 100%; position: relative;">
 
-<!-- 	<div style="width: 100%; height: 58px; background-color: #FFF; position: absolute; left: 0px; ">
-
-	</div> -->
-
-	<!-- <div class="divider-white" style="position: absolute; left: 0px; top: 58px;"></div> -->
-
 	<div class="conteudo" style="height: 100%;">
 
 		<div style="width: 100%; height: 100%; display: flex;">
 
 			<div style="margin: auto; width: 100%;" align="center">
 
+				<div style="padding: 0px 25px 15px 25px;">
+					<h1 style="font-size: 2em; color: #FFF;">Search for a movie! :)</h1>
+				</div>
+
 				<form ng-submit="buscar(titulo)">
-					<input type="search" ng-model="titulo">
+					<input type="search" ng-model="titulo" placeholder="Ex: Star Wars">
 					<button type="submit">SEARCH</button>
 				</form>
+
+				<div style="width: 100%; margin-top: 25px; display: flex;">
+
+					<div class="hcardoso" style="margin: auto; text-align: center;">
+						<div style="margin-bottom: 10px;">
+							<span>Developed by <strong>Hugo Cardoso</strong></span>
+						</div>
+						<a href="https://github.com/tunadao1" target="_new"><i class="mdi mdi-github-circle mdi-24px"></i></a>
+						<a href="http://facebook.com.br/Hugo.Rafael.MC" target="_new"><i class="mdi mdi-facebook mdi-24px"></i></a>
+					</div>
+
+				</div>
 
 			</div>
 

@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngRoute','angularMoment','naif.base64']);
+var app = angular.module('app', ['ngRoute']);
 
 
 app.config(function($routeProvider) {
@@ -35,7 +35,7 @@ app.controller('appController', function($scope, $rootScope, $http, $location) {
 
 });
 
-app.controller('resultadoController', function($scope, $rootScope, $http, $location) {
+app.controller('resultadoController', function($scope, $rootScope, $http, $location, $window) {
 
 	if(!$rootScope.palavra){
 		$location.url('/buscar');
@@ -44,6 +44,8 @@ app.controller('resultadoController', function($scope, $rootScope, $http, $locat
 		$scope.page = 1;
 
 		$scope.update = function(){
+
+			$scope.resultado = '';
 
 			$http.get("http://www.omdbapi.com/?s=" + $rootScope.palavra + "&plot=full&type=movie&page=" + $scope.page)
 			.then(function(response) {
@@ -69,6 +71,13 @@ app.controller('resultadoController', function($scope, $rootScope, $http, $locat
 
 		}
 
+		$scope.toTop = function(){
+
+			$window.scrollTo(0, angular.element(document.getElementById('view')).offsetTop);
+			// $window.scrollTo(0, 0);
+
+		}
+
 	}
 
 });
@@ -87,16 +96,20 @@ app.controller('buscaController', function($scope, $rootScope, $location, $http)
 
 app.controller('movieController', function($scope, $rootScope, $location, $http) {
 
-	$http.get("http://www.omdbapi.com/?i=" + $rootScope.imdbID + "&plot=full")
-	.then(function(response) {
-		$scope.filme = response.data;
-		console.log(response.data);
-	});
+	if(!$rootScope.palavra){
+		$location.url('/buscar');
+	}else{
+		$http.get("http://www.omdbapi.com/?i=" + $rootScope.imdbID + "&plot=full")
+		.then(function(response) {
+			$scope.filme = response.data;
+			console.log(response.data);
+		});
 
-	$scope.back = function(x){
+		$scope.back = function(x){
 
-		$location.url('/resultado');
+			$location.url('/resultado');
 
+		}
 	}
 
 

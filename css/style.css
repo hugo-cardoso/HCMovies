@@ -2,7 +2,7 @@ body, html{
 	height: 100%;
 	font-family: 'Roboto', sans-serif !important;
 	font-weight: 400;
-	background-color: #FFF;
+	background-color: #282c37;
 	width: 100%;
 }
 
@@ -11,9 +11,14 @@ h1{
 	font-weight: 300;
 }
 
-h1,h2,h3,h4,h5,h6{
+h1,h2,h3,h4,h5,h6,span,p{
 	margin: 0px;
 	padding: 0px;
+	color: #FFF;
+}
+
+strong{
+	font-weight: 700;
 }
 
 .sidemenu{
@@ -114,6 +119,14 @@ h1,h2,h3,h4,h5,h6{
 	width: 100%; height: 100%; padding-left: 0px; overflow: auto; float: left; position: relative;
 }
 
+.loading > div{
+	background-color: #00b0f4;
+}
+
+.loading > div:before, .loading > div:after{
+	background-color: #00b0f4;
+}
+
 
 #search input[type=search]{
 	width: 50%;
@@ -124,70 +137,188 @@ h1,h2,h3,h4,h5,h6{
 	margin-right: -5px;
 }
 
+#search input[type=search]:focus{
+	outline-width: 0;
+}
+
 #search button{
 	padding: 15px;
-    border: 2px solid #bdbdbd;
-    background-color: #444a64;
-    color: #FFF;
-    border-radius: 0px 5px 5px 0px;
-    font-weight: 500;
+	border: 2px solid #bdbdbd;
+	background-color: #00b0f4;
+	color: #FFF;
+	border-radius: 0px 5px 5px 0px;
+	font-weight: 500;
 }
 
 .btn {
-	padding: 0px;
+	padding: 5px 15px;
+	background-color: #00b0f4;
+	border: none;
+	border-radius: 5px;
+	font-weight: 500;
+	color: #FFF;
+	text-transform: uppercase;
 }
 
 /**/
 
 .user {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin: 0 auto 24px auto;
-  max-width: 960px;
-  margin-top: 10px;
-  height: 150px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	margin: 0 auto 24px auto;
+	max-width: 960px;
+	margin-top: 10px;
+	height: 150px;
 }
 
 .user:last-child {
-  margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 .user__avatar {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 96px;
-      -ms-flex: 0 0 96px;
-          flex: 0 0 96px;
-  width: 96px;
+	-webkit-box-flex: 0;
+	-webkit-flex: 0 0 96px;
+	-ms-flex: 0 0 96px;
+	flex: 0 0 96px;
+	width: 96px;
 }
 
 .user__description {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  margin-left: 24px;
-  padding: 12px;
-  border: solid 1px #e7e7e7;
-  height: 150px;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+	margin-left: 24px;
+	padding: 12px;
+	border: solid 1px #e7e7e7;
+	height: 150px;
 }
 
 .user__description:hover {
-  border: solid 1px #00b0f4;
+	border: solid 1px #00b0f4;
 }
 
 .user__username {
-  margin: 0 0 12px 0;
-  padding: 0;
-  font-weight: 500;
+	margin: 0 0 12px 0;
+	padding: 0;
+	font-weight: 500;
+	font-size: 1.5rem;
 }
 
 .user__excerpt {
-  margin: 0;
+	margin: 0;
+	font-size: 1.3rem;
+}
+
+/*Credit*/
+
+.hcardoso a{
+	color: #FFF;
+}
+
+.hcardoso a:hover{
+	color: #00b0f4;
+}
+
+/*Movie*/
+
+@media only screen and (max-width: 480px) {
+
+	div.coverbg{
+		background-color: black;
+		height: 50%;
+		width: 100%;
+		float: left;
+		padding: 10px;
+	}
+
+	.coverbg > img{
+		height: 100%;
+		margin: auto;
+	}
+
+	#movie .details{
+		padding: 25px 25px;
+		float: left;
+		width: 100%;
+	}
+
+	#movie .details h1{
+		font-size: 2em;
+		font-weight: 500;
+		margin-bottom: 25px;
+	}
+
+	table{
+		color: #FFF;
+		width: 100%;
+	}
+
+	table td.icon{
+		width: 25%;
+		text-align: center;
+	}
+
+	table td{
+		padding: 5px;
+		vertical-align: middle;
+	}
+
+}
+
+@media only screen and (min-width: 480px) {
+
+	div.coverbg{
+		background-color: black;
+		height: 50%;
+		width: 100%;
+		float: left;
+		padding: 10px;
+	}
+
+	.coverbg > img{
+		height: 100%;
+		margin: auto;
+	}
+
+	#movie .title{
+		width: 50%;
+		margin: auto;
+	}
+
+	#movie .details{
+		padding: 25px 25px;
+		float: left;
+		width: 100%;
+	}
+
+	#movie .details h1{
+		font-size: 2em;
+		font-weight: 500;
+		margin-bottom: 25px;
+	}
+
+	table{
+		color: #FFF;
+		width: 50%;
+		margin: auto;
+	}
+
+	table td.icon{
+		width: 100px;
+		text-align: center;
+	}
+
+	table td{
+		padding: 5px;
+		vertical-align: middle;
+	}
+
 }
 
